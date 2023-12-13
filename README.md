@@ -24,5 +24,5 @@ For this project, I chose [create-t3-app](https://create.t3.gg/) for initial set
 
 ## Challenges and Learnings
 
-- I am familiar with Typescript, but it is much slower working with it in an established code base rather than evergreen. 
+- I am familiar with Typescript, but it is much slower working with it in a new project, rather than an established code base.
 - I would likely reach for many of these technologies again. The APIs and documentation were clear and intuitive.
