@@ -1,28 +1,28 @@
-# Create T3 App
+ # Heard Assessment
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Welcome to my submission for the [heard-technical-assessment](https://github.com/Heard-Mental-Health/heard-technical-assessment)! This project aims to give us a jumping off point for demonstating my technical ability. I've implemented a basic structure and I look forward to discussing the technical decisions and coding aspects of this project.
 
-## What's next? How do I make an app with this?
+## Prerequisites
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Node.js
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Setup
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. Clone the repository: `git clone https://github.com/Case104/heard-assessment.git`
+2. Install dependencies: `npm i`
+3. Set up the database: `npx prisma db push`
+4. Update Linter: `npm i`
+5. Start the development server: `npm run dev`
 
-## Learn More
+## Project Structure
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+The project uses a Next, tRPC, and Prisma to perform CRUD operations on Transactions. Proceedures are defined on the server side and called from the client.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Technological Choices
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+For this project, I chose [create-t3-app](https://create.t3.gg/) for initial setup, aligning my technology stack closely with Heard's environment and industry standards. This stack includes React, Next.js, t3, Prisma, and other related technologies. My selection was twofold: to align with the tools used at Heard and to enhance my personal skill set in these areas. I debated the choice between a minimalistic approach and the more comprehensive solution that I landed on, but I ended up with a product that I really enjoy.
 
-## How do I deploy this?
+## Challenges and Learnings
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- I am familiar with Typescript, but it is much slower working with it in an established code base rather than evergreen. 
+- I would likely reach for many of these technologies again. The APIs and documentation were clear and intuitive.
