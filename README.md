@@ -10,9 +10,10 @@ Welcome to my submission for the [heard-technical-assessment](https://github.com
 
 1. Clone the repository: `git clone https://github.com/Case104/heard-assessment.git`
 2. Install dependencies: `npm i`
-3. Set up the database: `npx prisma db push`
-4. Update Linter: `npm i`
-5. Start the development server: `npm run dev`
+3. Setup ENV: `mv .env.example .env`
+4. Set up the database: `npx prisma db push`
+5. Update Linter: `npm i`
+6. Start the development server: `npm run dev`
 
 ## Project Structure
 
