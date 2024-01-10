@@ -19,6 +19,7 @@ export const transactionsRouter = createTRPCRouter({
       return ctx.db.transaction.create({
         data: {
           ...input,
+          amount,
           transactionDate: new Date().toISOString(),
           createdAt: new Date().toISOString(),
         }
@@ -29,20 +30,59 @@ export const transactionsRouter = createTRPCRouter({
         z.object({
           id: z.string(),
           title: z.string(),
-          amount: z.number(),
+          amount: z.string(),
           description: z.string(),
           fromAccount: z.string(),
           toAccount: z.string(),
         })
       )
       .mutation(({ ctx, input }) => {
+        const amount = Number(input.amount);
+        console.log(amount)
+
         return ctx.db.transaction.update({
           where: {
             id: input.id,
           },
           data: {
             ...input,
+            amount,
           }
+        })
+      }),
+    accountTotals: publicProcedure
+      .query( async ({ ctx }) => {
+        const transactions = ctx.db.transaction.findMany({
+          where: {
+            fromAccount: {
+              not: null,
+            },
+            toAccount: {
+              not: null,
+            }
+          }
+        });
+        const totals = {}
+        await transactions.forEach(trans => {
+          const toAccount = trans.toAccount;
+          const fromAccount = trans.fromAccount;
+
+
+          if (totals[toAccount]) {
+            totals[toAccount] = totals[toAccount] + trans.amount
+          } else {
+            totals[toAccount] = trans.amount;
+          } 
+
+          if (totals[fromAccount]) {
+            totals[fromAccount] = totals[fromAccount] - trans.amount
+          } else {
+            totals[fromAccount] = trans.amount * -1;
+          }
+        })
+
+        Object.entries(totals).forEach(([key, value]) => {
+          totals[key] = {balance: value}
         })
       }),
     delete: publicProcedure
@@ -57,3 +97,5 @@ export const transactionsRouter = createTRPCRouter({
         })
       })
 });
+
+
