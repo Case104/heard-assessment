@@ -14,7 +14,6 @@ export type TransactionRowProps = {
     initialRowState?: string;
   };
   
-
   export default function TransactionRow(props: TransactionRowProps) {
     const {id, refetch, initialRowState, ...defaultValues} = props;
     const {control, handleSubmit, reset, watch } = useForm({
@@ -24,10 +23,10 @@ export type TransactionRowProps = {
     const editTransaction = api.transaction.update.useMutation();
     const deleteTransaction = api.transaction.delete.useMutation();
   
-    const [rowState, setRowState] = useState(initialRowState || 'viewing');
+    const [rowState, setRowState] = useState(initialRowState ?? 'viewing');
   
     const onSubmit = (data: typeof defaultValues) => {
-      editTransaction.mutate({ id, ...data }, {
+      editTransaction.mutate({ id, ...data, amount: Number(data.amount) }, {
         onSuccess: () => {
           setRowState('viewing');    }
       });
@@ -45,7 +44,6 @@ export type TransactionRowProps = {
       reset();
       setRowState('viewing');
     }
-  
   
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-6 col-span-6">
