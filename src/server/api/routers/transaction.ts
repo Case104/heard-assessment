@@ -45,29 +45,24 @@ export const transactionsRouter = createTRPCRouter({
           }
         })
       }),
-    accountTotals: publicProcedure
+      accountTotals: publicProcedure
       .query(async ({ ctx }) => {
         const transactions = await ctx.db.transaction.findMany();
-        const totals = {}
-        transactions.forEach(trans => {
-          const toAccount = trans.toAccount;
-          const fromAccount = trans.fromAccount;
-
-          console.log(trans)
-          if (totals[toAccount]) {
-            totals[toAccount] = { balance: totals[toAccount].balance + trans.amount }
+        return transactions.reduce((acc, trans) => {
+          if (acc[trans.toAccount]) {
+            acc[trans.toAccount].balance += trans.amount;
           } else {
-            totals[toAccount] = {balance: trans.amount };
-          } 
-
-          if (totals[fromAccount]) {
-            totals[fromAccount] = { balance: totals[fromAccount].balance - trans.amount }
-          } else {
-            totals[fromAccount] = { balance: trans.amount * -1 }
+            acc[trans.toAccount] = { balance: trans.amount };
           }
-        })
-        console.log(totals);
-        return totals;
+    
+          if (acc[trans.fromAccount]) {
+            acc[trans.fromAccount].balance -= trans.amount;
+          } else {
+            acc[trans.fromAccount] = { balance: -trans.amount };
+          }
+    
+          return acc;
+        }, {});
       }),
     delete: publicProcedure
       .input(
