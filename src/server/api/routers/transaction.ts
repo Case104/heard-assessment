@@ -19,7 +19,6 @@ export const transactionsRouter = createTRPCRouter({
       return ctx.db.transaction.create({
         data: {
           ...input,
-          amount,
           transactionDate: new Date().toISOString(),
           createdAt: new Date().toISOString(),
         }
@@ -30,60 +29,45 @@ export const transactionsRouter = createTRPCRouter({
         z.object({
           id: z.string(),
           title: z.string(),
-          amount: z.string(),
+          amount: z.number(),
           description: z.string(),
           fromAccount: z.string(),
           toAccount: z.string(),
         })
       )
       .mutation(({ ctx, input }) => {
-        const amount = Number(input.amount);
-        console.log(amount)
-
         return ctx.db.transaction.update({
           where: {
             id: input.id,
           },
           data: {
             ...input,
-            amount,
           }
         })
       }),
     accountTotals: publicProcedure
-      .query( async ({ ctx }) => {
-        const transactions = ctx.db.transaction.findMany({
-          where: {
-            fromAccount: {
-              not: null,
-            },
-            toAccount: {
-              not: null,
-            }
-          }
-        });
+      .query(async ({ ctx }) => {
+        const transactions = await ctx.db.transaction.findMany();
         const totals = {}
-        await transactions.forEach(trans => {
+        transactions.forEach(trans => {
           const toAccount = trans.toAccount;
           const fromAccount = trans.fromAccount;
 
-
+          console.log(trans)
           if (totals[toAccount]) {
-            totals[toAccount] = totals[toAccount] + trans.amount
+            totals[toAccount] = { balance: totals[toAccount].balance + trans.amount }
           } else {
-            totals[toAccount] = trans.amount;
+            totals[toAccount] = {balance: trans.amount };
           } 
 
           if (totals[fromAccount]) {
-            totals[fromAccount] = totals[fromAccount] - trans.amount
+            totals[fromAccount] = { balance: totals[fromAccount].balance - trans.amount }
           } else {
-            totals[fromAccount] = trans.amount * -1;
+            totals[fromAccount] = { balance: trans.amount * -1 }
           }
         })
-
-        Object.entries(totals).forEach(([key, value]) => {
-          totals[key] = {balance: value}
-        })
+        console.log(totals);
+        return totals;
       }),
     delete: publicProcedure
       .input(
