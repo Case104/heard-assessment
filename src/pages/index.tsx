@@ -6,8 +6,9 @@ import TransactionRow from "~/components/TransactionRow";
 
 export default function Home() {
   const { data, refetch } = api.transaction.getAll.useQuery();
-
   const [ creating, setCreating ] = useState(false);
+
+  const { balances } = api.transaction.accountTotals.useQuery();
 
   return (
     <>
@@ -32,6 +33,10 @@ export default function Home() {
                 onClick={() => setCreating(true)}
                 >Create</button>
             )}
+            {/* <button
+              type="button"
+              className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onclick{} */}
           </div>
           <div className="grid grid-cols-1 gap-4 border-t border-slate-400 justify-center">
             <TransactionRow
