@@ -19,7 +19,7 @@ Welcome to my submission for the [heard-technical-assessment](https://github.com
 
 The project uses a Next, tRPC, and Prisma to perform CRUD operations on Transactions. Proceedures are defined on the server side and called from the client.
 
-## Technological Choices
+## Tech Choices
 
 For this project, I chose [create-t3-app](https://create.t3.gg/) for initial setup, aligning my technology stack closely with Heard's environment and industry standards. This stack includes React, Next.js, t3, Prisma, and other related technologies. My selection was twofold: to align with the tools used at Heard and to enhance my personal skill set in these areas. I debated the choice between a minimalistic approach and the more comprehensive solution that I landed on, but I ended up with a product that I really enjoy.
 
